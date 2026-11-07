@@ -1,0 +1,278 @@
+/* ==========================================================================
+   Game Development Journal: printed-paper theme
+   Layers, from the bottom up: the desk (surrounding surface) -> the paper sheet (fibres, grain, aging,
+   flecks, torn edges) -> printed ink (ruled layout, columns, uneven ink density) -> separate slips of
+   paper (sidebar, handwritten notes, code listings).  Textures are small SVG files in /paper/ and the
+   typeface is bundled in /fonts/, so nothing is loaded from other websites.
+   The editor pages (Writing Desk, Site Settings) share the base rules; newspaper layout is under .site
+   ========================================================================== */
+@font-face{font-family:"Journal Serif";src:url(fonts/LiberationSerif-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Journal Serif";src:url(fonts/LiberationSerif-Italic.woff) format("woff");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Journal Serif";src:url(fonts/LiberationSerif-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Journal Serif";src:url(fonts/LiberationSerif-BoldItalic.woff) format("woff");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Journal Mono";src:url(fonts/LiberationMono-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Journal Mono";src:url(fonts/LiberationMono-Bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+
+:root{
+  --desk:#1d1d1f;      /* the surface the paper lies on: dark charcoal woven cloth (see paper/fabric*.svg) */
+  --sheet:#F2ECDB;     /* the newspaper sheet (slightly deeper than --paper so the texture sits on it) */
+  --slip:#EEE7D3;      /* a separate piece of paper (sidebar, listings) */
+  --paper:#F6F0E0;     /* light paper for form fields and dialogs */
+  --bg:#ECE5CF;        /* inline code and listings */
+  --ink:#29251E;
+  --head:#0B0A09;      /* large headings: clear black (body text keeps --ink) */
+  --title:#171512;     /* the main title (nameplate) on the site AND in the editor: soft deep black, no brown tint; one value for both */
+  --ink2:#5E5444;      /* secondary ink: 6.2:1 on paper, 5.1:1 on the darkest aging */
+  --line:#554B3A;
+  --hair:rgba(85,75,58,.55);
+  --red:#8B3028;
+  --pencil:#2E3B55;    /* blue-black pen for handwritten notes */
+  --serif:"Journal Serif","Liberation Serif","Times New Roman",Times,Georgia,serif;
+  --mono:"Journal Mono","Liberation Mono","Courier New",monospace;
+}
+*{box-sizing:border-box;border-radius:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+
+/* ---- the desk ---- */
+body{margin:0;padding:10px 8px 24px;color:var(--ink);font:17px/1.55 var(--serif);
+  background-color:var(--desk);background-image:url(paper/fabric-mottle.svg),url(paper/fabric.svg);background-size:1600px,512px;background-attachment:scroll;
+  text-rendering:optimizeLegibility;font-kerning:normal;
+  text-shadow:0 0 .55px rgba(41,37,30,.47)} /* ink spreads a little into the fibres, so letter edges are never perfectly sharp */
+
+/* ---- the paper sheet ---- */
+.paper{position:relative;max-width:1180px;min-height:calc(100vh - 34px);margin:0 auto;padding:12px 16px 20px;
+  background-color:var(--sheet);
+  background-image:url(paper/specks.svg),url(paper/fibers.svg),url(paper/grain.svg),
+    radial-gradient(circle at var(--ax,11%) var(--ay,83%),rgba(140,105,62,.075) 0,transparent 8%),radial-gradient(circle at var(--bx,89%) var(--by,31%),rgba(140,105,62,.06) 0,transparent 6%),
+    url(paper/blotch.svg);
+  background-size:900px,700px,256px,auto,auto,1400px;
+  background-position:var(--p1,0 0),var(--p2,0 0),0 0,0 0,0 0,var(--p6,0 0);   /* the aging layers are shifted a little on every load (src/paper-stains.js) */
+  /* thin dark edge where the sheet ends, a touch of contact shadow, and browning toward the edges */
+  box-shadow:0 0 0 1px rgba(70,52,28,.5),0 1px 2px rgba(40,30,15,.35),inset 0 0 70px rgba(130,100,62,.21),inset 0 0 5px rgba(108,84,52,.3)}
+/* ink that did not take: tiny paper-coloured gaps scattered over everything printed on the sheet */
+.paper::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:url(paper/inkloss.svg) 0 0/420px}
+/* torn edges (public site): src/torn-edge.js cuts the sheet's outline into an uneven hand-torn line and adds a thin pale fibre rim along it.
+   The contact shadow lives on the wrapper, because a shadow on the cut element itself would be cut away with it. Without JavaScript the edge is simply straight. */
+.site .sheet{max-width:1180px;margin:0 auto;filter:drop-shadow(0 1px 1.5px rgba(40,30,15,.4)) drop-shadow(0 0 .8px rgba(70,52,28,.4))}
+.site .sheet>.paper{box-shadow:inset 0 0 70px rgba(130,100,62,.21),inset 0 0 5px rgba(108,84,52,.3)}
+.rim{position:absolute;inset:0;z-index:4;pointer-events:none;background:rgba(252,247,232,.45)}
+/* coffee marks (src/paper-stains.js) have their own layer. z-index:-1 inside the sheet's own stacking context paints them above the paper
+   texture but BELOW everything printed on it: text, photographs, galleries, rows, video and slips. They can never lie over a picture. */
+.site .sheet>.paper{isolation:isolate}
+.stains{position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:hidden}
+
+/* ---- links, focus, skip link ---- */
+a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0;z-index:20}
+.skip:focus{left:8px;top:8px;padding:8px 14px;background:var(--paper);border:1px solid var(--ink)}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---- basic print typography ---- */
+h1,h2,h3,h4{font-family:var(--serif);line-height:1.15;color:var(--head)}
+h1 a,h2 a,h3 a,h4 a{color:inherit}   /* linked headings stay black; a:hover (red) still wins, it is more specific */
+header{text-align:center;border-bottom:4px double var(--line);margin-bottom:20px}
+h1{font-size:clamp(1.5rem,8vw,2.6rem);margin:.35em 0 0}
+.meta{margin:.2em 0;font-size:.82rem;color:var(--ink2)}
+nav{font-size:.9rem}nav a{display:inline-block;padding:8px 6px}
+p code,li code{background:var(--bg);padding:0 3px}
+code{font-family:var(--mono);font-size:.88em;text-shadow:none}
+img{display:block;max-width:100%;height:auto;border:1px solid var(--line)}
+.px{image-rendering:pixelated;image-rendering:crisp-edges}
+hr{border:0;border-top:1px solid var(--ink);margin:1.2em 0}
+.vbad{font-style:italic}
+
+/* ---- buttons and fields (shared with the editor) ---- */
+button{font:inherit;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:7px 12px;cursor:pointer}
+button:hover{background:var(--ink);color:var(--paper)}
+button:disabled{opacity:.5;cursor:default}button:disabled:hover{background:transparent;color:var(--ink)}
+.search{display:flex;gap:6px;margin:14px 0}
+.search input{flex:1;min-width:0;padding:9px 11px;background:rgba(255,252,238,.4);color:var(--ink);border:1px solid var(--ink);font:italic 1rem var(--serif)}
+.search input::placeholder{color:var(--ink2);opacity:1}
+.cats{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.cats button.on{background:var(--ink);color:var(--paper)}
+
+/* ---- tables, listings, quotes ---- */
+.scroll{overflow-x:auto;margin:1em 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+th,td{padding:4px 10px;border:0;border-bottom:1px dotted var(--hair);text-align:left}
+th{border-bottom:1px solid var(--ink);font-weight:700}
+/* a code listing is a slip of slightly darker paper, set in typewriter type between two rules */
+pre{margin:1em 0;padding:10px 14px;overflow-x:auto;background-color:var(--bg);background-image:url(paper/grain.svg);
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);box-shadow:inset 0 0 14px rgba(126,98,62,.12);
+  font:.84rem/1.45 var(--mono);text-align:left;hyphens:none;text-shadow:none;tab-size:4}
+pre code{font-size:inherit;background:none;padding:0}
+/* a quotation is a pull-quote: larger italic between a heavy and a light rule */
+blockquote{margin:1em 0;padding:.5em .3em .45em;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);font-style:italic;font-size:1.18rem;line-height:1.35;text-align:center;break-inside:avoid;hyphens:none}
+/* a handwritten note: a lined slip of notebook paper with a margin rule, written in blue-black pen */
+.note{margin:1.2em .5em;padding:0 1em 0 3.1em;color:var(--pencil);font:italic 1.12rem/1.55em var(--serif);text-align:left;hyphens:none;transform:rotate(-.5deg);break-inside:avoid;
+  border:1px solid rgba(85,75,58,.45);box-shadow:0 1px 1px rgba(40,30,15,.25);text-shadow:0 0 .5px rgba(46,59,85,.5);
+  background-color:#F7F2E3;
+  background-image:linear-gradient(90deg,transparent 2.3em,rgba(165,55,45,.5) 2.3em,rgba(165,55,45,.5) calc(2.3em + 1px),transparent calc(2.3em + 1px)),
+    repeating-linear-gradient(180deg,transparent 0,transparent calc(1.55em - 1px),rgba(90,120,165,.38) calc(1.55em - 1px),rgba(90,120,165,.38) 1.55em),url(paper/grain.svg)}
+.note p{margin:0;text-indent:0}
+
+/* ---- photographs: printed into the paper, never pasted on top of it ---- */
+.ph{display:block;position:relative;line-height:0}
+.ph img{width:100%;border:1px solid var(--ink);padding:0;background:none}
+/* photographs and video sit above the sheet's ink-dropout layer, so nothing from the paper is ever drawn over a picture */
+.ph,.mwrap,.vbox{z-index:6}
+figure{margin:0}
+figcaption{margin-top:6px;font:italic .84rem/1.35 var(--serif);color:var(--ink2);text-align:left;hyphens:none}
+.body{counter-reset:fig}
+.body figcaption::before{counter-increment:fig;content:"Fig. " counter(fig) ". ";font-style:normal;font-weight:700}
+.body .video figcaption::before{content:"Video: ";counter-increment:none}
+.body figure{margin:1em 0;break-inside:avoid;text-align:center}
+.body figure .ph{width:fit-content;max-width:100%;margin:0 auto}
+.body figure .ph img{width:auto;margin:0 auto}
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:1.2em 0}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.2em 0}
+.gallery figure,.compare figure{margin:0!important}
+.gallery .ph,.compare .ph{width:100%!important}.gallery .ph img,.compare .ph img{width:100%!important}
+.vbox{position:relative;aspect-ratio:16/9;border:1px solid var(--ink);background:#1d1a15}
+.vbox iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.video.short .vbox{aspect-ratio:9/16;max-width:min(100%,360px);margin:0 auto}
+/* side-by-side layout (:::row): stacked when its box is narrow, columns when there is room */
+.mwrap{container:mw/inline-size;position:relative;margin:1.2em 0}
+.mrow{display:grid;gap:14px;grid-template-columns:minmax(0,1fr);align-items:start}
+.mrow>*{min-width:0;margin:0!important}
+.mrow .ph{width:100%!important}.mrow .ph img{width:100%!important;max-width:100%;height:auto}
+@container mw (min-width:460px){.mrow.c2,.mrow.c3,.mrow.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container mw (min-width:680px){.mrow.c3,.mrow.c4{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container mw (min-width:880px){.mrow.c4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ==========================================================================
+   Newspaper layout (public site only)
+   ========================================================================== */
+/* masthead: dateline strip between a heavy and a light rule, nameplate, motto, section bar */
+.site .mast{margin-bottom:16px;border:0}
+.site .strip{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 12px;margin:0;padding:3px 0;border-top:4px solid var(--ink);border-bottom:1px solid var(--ink);font:700 .66rem/1.5 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.site .strip span:nth-child(2){order:3;flex:1 0 100%;text-align:center;border-top:1px solid var(--hair);margin-top:2px}
+.site .nameplate{margin:.28em 0 .08em;font:700 clamp(1.85rem,8.4vw,4.7rem)/1.03 var(--serif);letter-spacing:.045em;text-transform:uppercase;text-wrap:balance;filter:url(#ink)}
+.site .nameplate{color:var(--title);text-shadow:0 0 .55px rgba(23,21,18,.42)}
+.site .nameplate a{text-decoration:none;color:var(--title)}.site .nameplate a:hover{color:var(--red)}
+.site .sub{margin:2px 0 0;padding:4px 0;font-style:italic;color:var(--ink2);border-top:1px solid var(--ink)}
+.site .mast nav{display:flex;flex-wrap:wrap;justify-content:center;padding:0;border-top:1px solid var(--ink);border-bottom:4px double var(--ink);font:700 .76rem var(--serif);letter-spacing:.16em;text-transform:uppercase}
+.site .mast nav a{padding:10px 15px;text-decoration:none}
+.site .mast nav a+a{border-left:1px solid var(--hair)}
+.site .mast nav a[aria-current]{color:var(--red)}
+.site .mast nav a:hover{text-decoration:underline}
+.wrap{display:grid;gap:24px}
+.site main{min-width:0}
+
+/* small printed labels */
+.site .meta{font:700 .68rem/1.45 var(--serif);letter-spacing:.11em;text-transform:uppercase}
+.site .kicker{color:var(--red)}.kicker a{text-decoration:none}.kicker a:hover{text-decoration:underline}
+.more{display:inline-block;margin-top:2px;font:italic .92rem var(--serif);color:var(--red);text-decoration:none;border-bottom:1px solid var(--red)}
+.more:hover{color:var(--ink);border-color:var(--ink)}
+.allmore{margin:10px 0 4px;font-style:italic}
+
+/* page and section headings */
+.ptitle{margin:.2em 0 .55em;padding-bottom:.25em;text-align:center;font:700 clamp(1.8rem,5.5vw,2.9rem)/1.08 var(--serif);border-bottom:1px solid var(--ink)}
+.site main>h1.ptitle,.site main>h2.ptitle{filter:url(#ink)}
+.listsec>h2{margin:1.1em 0 .6em;padding:3px 0;text-align:center;font:700 .82rem var(--serif);letter-spacing:.26em;text-transform:uppercase;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink)}
+.listsec:first-child>h2{margin-top:.2em}
+.intro,.body p.intro{text-indent:0;text-align:center}
+.intro{margin:.3em auto 1em;max-width:44em;text-align:center;font-style:italic;font-size:1.14rem;line-height:1.45}
+.deck{margin:.2em 0 .5em;font-style:italic;font-size:1.08rem;line-height:1.42}
+
+/* lead story: headline across the top, picture and standfirst beneath */
+.lead{padding-bottom:16px;border-bottom:1px solid var(--ink)}
+.lead .kicker{margin:0}
+.lead h3{margin:.08em 0 .4em;font:700 clamp(1.75rem,4.6vw,2.8rem)/1.04 var(--serif);text-wrap:balance;filter:url(#ink)}
+.lead h3 a{text-decoration:none}
+.leadbody{display:grid;gap:12px}
+.leadpic{display:block}
+.lead .ph img{aspect-ratio:16/9;object-fit:cover}
+
+/* the other stories run in ruled columns */
+.entries{column-gap:30px;column-rule:1px solid var(--hair)}
+.entry{break-inside:avoid;margin:0 0 14px;padding:0 0 14px;border-bottom:1px solid var(--hair)}
+.entry p{margin:.3em 0}
+.entry h3{margin:.4em 0 .15em;font:700 1.3rem/1.15 var(--serif)}
+.entry h3 a{text-decoration:none}.entry h3 a:hover{text-decoration:underline}
+.entry .th{display:block}.entry .th img{aspect-ratio:16/9;object-fit:cover}
+#results .entry:last-child{border-bottom:0}
+
+/* the sidebar is a separate slip of paper with its own fibres */
+.site aside{align-self:start;padding:12px 16px 4px;background-color:var(--slip);background-image:url(paper/fibers.svg),url(paper/grain.svg);background-size:700px,256px;background-position:210px 90px,0 0;
+  border:1px solid var(--ink);box-shadow:0 1px 0 rgba(60,45,25,.4),inset 0 0 20px rgba(126,98,62,.15)}
+aside section{margin-bottom:18px}
+.ah{margin:0 0 8px;padding:3px 0;text-align:center;color:var(--head);font:700 .8rem var(--serif);letter-spacing:.22em;text-transform:uppercase;border-top:3px double var(--ink);border-bottom:1px solid var(--ink)}
+aside ul{list-style:none;margin:0;padding:0}aside li{margin-bottom:8px;line-height:1.3}
+.index li{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.index .dots{flex:1;min-width:12px;border-bottom:1px dotted var(--ink2);transform:translateY(-3px)}
+.index .n{font-variant-numeric:tabular-nums}
+aside a.on{color:var(--red);font-weight:700;border-bottom:2px solid var(--red);text-decoration:none}
+.catlinks a{margin-right:14px}
+.sec{margin:1.2em 0}.links{padding-left:1.2em}
+.arch h3{margin:.8em 0 .2em}.arch ul{list-style:none;padding:0;margin:0}
+
+/* the article */
+.post .kicker{margin:.3em 0 0;text-align:center}
+.post .title{margin:.1em 0 .25em;text-align:center;font:700 clamp(2rem,6.4vw,3.7rem)/1.04 var(--serif);text-wrap:balance;filter:url(#ink)}
+.post>.deck{max-width:40em;margin:0 auto .7em;text-align:center}
+.byline{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 16px;margin:10px 0 16px;padding:4px 2px;border-top:1px solid var(--ink);border-bottom:3px double var(--ink);font:700 .68rem/1.5 var(--serif);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.cover{margin:0 0 18px}
+.cover .ph{width:100%}.cover img{width:100%}
+
+/* body text: justified, hyphenated, set in two ruled columns once there is room */
+.body h2{margin:1.1em 0 .6em;padding:4px 0;text-align:center;font:700 .94rem/1.2 var(--serif);letter-spacing:.14em;text-transform:uppercase;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);break-after:avoid}
+.body h3{margin:1em 0 .3em;font:italic 700 1.14rem/1.2 var(--serif);break-after:avoid}
+.body h4{margin:1em 0 .3em;font:700 .92rem var(--serif);letter-spacing:.06em;text-transform:uppercase;break-after:avoid}
+.body p{margin:0 0 .8em;text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.body ul,.body ol{margin:.5em 0 .9em;padding-left:1.4em;text-align:left}.body li{margin-bottom:.2em}
+.post .body{column-width:19em;column-count:2;column-gap:2.4em;column-rule:1px solid var(--hair)}
+.post .body p{margin:0 0 .8em;text-indent:0}
+.post .body .note p{margin:0}
+.body .gap{height:1.55em;height:1lh}
+.post .body :is(h2,h3,h4,figure,blockquote,.note,ul,ol,pre,.scroll,.gallery,.compare,.mwrap,hr)+p,.post .body>p:first-child{text-indent:0}
+.post .body>p:first-child::first-letter{float:left;margin:.04em .035em 0 0;font:700 3.6em/.8 var(--serif);color:var(--ink)} /* drop cap */
+.post .body :is(pre,.scroll,.gallery,.compare,.mwrap){column-span:all}
+.post .body hr{column-span:all;margin:1em 0}
+.body.cols{column-width:19em;column-count:2;column-gap:2.4em;column-rule:1px solid var(--hair)}
+.body.cols .sec{break-inside:avoid;margin-top:0}
+.one .body:not(.cols){max-width:46em;margin-inline:auto}
+.pn{display:flex;justify-content:space-between;gap:16px;margin:22px 0 10px;padding:8px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font:italic .95rem var(--serif)}
+
+/* footer: folio line, colophon, links, social icons */
+footer{margin-top:26px;padding-top:6px;border-top:4px double var(--ink);text-align:center;color:var(--ink2);font-size:.85rem}
+.folio{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;gap:8px;margin:0 0 6px;font:700 .66rem var(--serif);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.folio span:first-child{text-align:left}.folio span:last-child{text-align:right}.folio .pg{font-size:.95rem;letter-spacing:.1em}
+footer p{margin:.3em 0}
+footer nav.fnav{margin:4px 0 0;padding:0;font:700 .7rem var(--serif);letter-spacing:.14em;text-transform:uppercase}
+footer nav.fnav a{display:inline-block;padding:8px 8px}footer nav.fnav a[aria-current]{color:var(--red)}
+.social{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:0 4px}
+.social a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 6px;color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.social a:hover,.social a:focus-visible{color:var(--red);border-bottom-color:var(--red)}
+.social svg{width:22px;height:22px;fill:currentColor}.social svg.st{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.social img{width:22px;height:22px;padding:0;border:0;background:none;filter:grayscale(1) sepia(.35)}
+.social .tx{font:700 .72rem var(--serif);letter-spacing:.1em;text-transform:uppercase}
+
+@media(max-width:559px){.site .mast nav a{padding:10px 11px}.folio{grid-template-columns:1fr}.folio span:first-child,.folio span:last-child{display:none}.folio .pg{text-align:center}}
+@media(min-width:480px){body{padding:12px 12px 28px}.paper{padding:14px 22px 24px}}
+@media(min-width:700px){
+  .entries{column-count:2}
+  .leadbody{grid-template-columns:1.4fr 1fr;gap:22px;align-items:start}
+  .leadbody>div{padding-left:22px;border-left:1px solid var(--hair)}
+  .gallery{grid-template-columns:repeat(3,1fr)}
+  .site .strip span:nth-child(2){order:0;flex:1;border:0;margin:0;text-align:center}
+}
+@media(min-width:768px){body{padding:16px 16px 34px}.paper{padding:20px 38px 30px}.site .strip{font-size:.7rem}}
+@media(min-width:1000px){
+  body{font-size:17.5px}
+  .wrap:not(.one){grid-template-columns:minmax(0,1fr) 270px;gap:30px}
+  .paper{padding:24px 48px 34px}
+}
+@media(min-width:1500px){body{font-size:18px}.site aside{padding:14px 18px 6px}}
+@media(max-width:699px){.post .body,.body.cols{column-count:1}}
+
+@media print{
+  body{background:#fff;padding:0;text-shadow:none}
+  .paper{box-shadow:none;background:#fff;max-width:none}
+  .paper::before,.paper::after{display:none}
+  .site aside,.skip,.search,.cats{display:none}
+  .paper{clip-path:none!important}.rim,.stains{display:none}
+}

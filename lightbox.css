@@ -1,0 +1,50 @@
+/* Image lightbox: every rule is scoped to .lbx-* (or to images the lightbox itself marked with data-lbx). Nothing global is touched. */
+img[data-lbx]{cursor:zoom-in}
+img[data-lbx]:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+
+.lbx{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:rgba(10,8,6,.92);color:#f4efe2;font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}
+.lbx *{box-sizing:border-box}
+.lbx:focus{outline:none}
+
+.lbx-stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:default}
+.lbx-img{position:absolute;left:50%;top:50%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:none;box-shadow:0 4px 40px rgba(0,0,0,.55);transform-origin:center center;-webkit-user-drag:none;user-drag:none;pointer-events:auto;cursor:zoom-in;opacity:0;filter:none}
+.lbx-img.lbx-loaded{opacity:1}
+.lbx-img.lbx-zoomed{cursor:grab}
+.lbx.lbx-drag .lbx-img{cursor:grabbing}
+.lbx-img.lbx-anim{transition:transform .15s ease}
+.lbx-img.lbx-px{image-rendering:pixelated;image-rendering:crisp-edges}
+.lbx-msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:0 24px;text-align:center;max-width:90%}
+
+.lbx-bar{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:flex-end;align-items:center;gap:8px;padding:max(10px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) 10px max(10px,env(safe-area-inset-left));pointer-events:none}
+.lbx-bar>*{pointer-events:auto}
+.lbx-count{margin-right:auto;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.45);font-size:.9rem;font-variant-numeric:tabular-nums}
+
+.lbx-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:0;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font:inherit;font-size:1.5rem;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;text-decoration:none;box-shadow:none}
+.lbx-btn:hover{background:rgba(255,255,255,.22)}
+.lbx-btn:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.lbx-btn[disabled]{opacity:.35;cursor:default}
+.lbx-btn svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+/* Zoom in / zoom out / reset (percentage) / close: restyled as small square paper tabs with a thin ink border, matching the site's own buttons (paper fill, ink line, ink-on-hover). Visual only. */
+.lbx-btn.lbx-in,.lbx-btn.lbx-out,.lbx-btn.lbx-close,.lbx-btn.lbx-reset{border:1px solid #29251E;border-radius:0;background:#F2ECDB;color:#29251E;box-shadow:0 0 0 1px rgba(246,240,224,.45)}
+.lbx-btn.lbx-in:hover,.lbx-btn.lbx-out:hover,.lbx-btn.lbx-close:hover,.lbx-btn.lbx-reset:hover{background:#29251E;color:#F6F0E0;box-shadow:0 0 0 1px rgba(246,240,224,.6)}
+.lbx-btn.lbx-in:active,.lbx-btn.lbx-out:active,.lbx-btn.lbx-close:active,.lbx-btn.lbx-reset:active{background:#554B3A;color:#F6F0E0}
+.lbx-btn.lbx-in:focus-visible,.lbx-btn.lbx-out:focus-visible,.lbx-btn.lbx-close:focus-visible,.lbx-btn.lbx-reset:focus-visible{outline:2px solid #F6F0E0;outline-offset:2px}
+.lbx-btn.lbx-in[disabled],.lbx-btn.lbx-out[disabled]{background:#F2ECDB;color:#29251E}
+.lbx-in svg,.lbx-out svg,.lbx-close svg{width:20px;height:20px;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
+.lbx-reset{width:auto;min-width:44px;padding:0 12px;border-radius:0;font-family:"Journal Serif","Liberation Serif","Times New Roman",Times,Georgia,serif;font-size:1rem;font-variant-numeric:tabular-nums}
+
+.lbx-nav{position:absolute;top:50%;z-index:2;transform:translateY(-50%)}
+.lbx-prev{left:max(10px,env(safe-area-inset-left))}
+.lbx-next{right:max(10px,env(safe-area-inset-right))}
+
+.lbx-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:10px max(16px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));text-align:center;font-size:.95rem;background:linear-gradient(transparent,rgba(0,0,0,.6));pointer-events:none;max-height:30%;overflow:hidden}
+.lbx-cap:empty{display:none}
+
+.lbx-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+@media (max-width:600px){
+  .lbx-btn{width:42px;height:42px}
+  .lbx-nav{top:auto;bottom:max(6px,env(safe-area-inset-bottom));transform:none}
+  .lbx-cap{padding-left:64px;padding-right:64px}
+}
+@media (prefers-reduced-motion:reduce){.lbx-img.lbx-anim{transition:none}}
