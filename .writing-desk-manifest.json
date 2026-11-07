@@ -2,12 +2,12 @@
  "version": 1,
  "files": {
   ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "404.html": "d50ce658067ae84171b585636a6a87113392892af91f5299837ea0dfaa8c8839",
-  "about/index.html": "a8a7db8c0382182175f55ce2d694f993e376e34eb26b5bbbe9e3b62571ca6df4",
-  "blog/godot-setup/index.html": "2906760cd4dd1816b7a46431e060fde0e832aef57392bf1333a294613eca65da",
-  "blog/index.html": "80514414e8c9681574aed8830a602a7aadaf32004b69f536efbece441542764c",
-  "blog/pixel-art-workflow/index.html": "2fb1df6aca21fbea62336cc7233d7fea00dc6c354d183b826303f3570b4dae7e",
-  "blog/starting-game-development/index.html": "d0b089cf6081641cac37144521fa3fd8ff97492a6dc25576b60c1e7c201b67d5",
+  "404.html": "ea10bc79859c2cb20c3c798f42a3cf2a6ecd68e99575c7ef458c506d32203abc",
+  "about/index.html": "8d61b9671d7437b3741059e420c448a0e65c9e4b3b0b4c6812bca36d76ae127d",
+  "blog/godot-setup/index.html": "5482e68ac185acc1292fd60e841060e2993b613b15b1fa1d3238c742eef212bc",
+  "blog/index.html": "80b13133d63e443b5979ada66be1896abb0454ca04788b9be1e4beb27b068152",
+  "blog/pixel-art-workflow/index.html": "995acef095de7b0c0d50b3121061fcb26413d146ef29792348510cf8195404fe",
+  "blog/starting-game-development/index.html": "13d6ee63450c129a3f1ea1e2a5b82b828dea703c179170c0f1c3b3da7698a96c",
   "fonts/LICENSE-Liberation.txt": "f32df582a2aab128c07b2f7e36e7b928dc5f6bd82657b905c04f91459f9e5cf9",
   "fonts/LiberationMono-Bold.woff": "6c2e8370cb99f60a953f25be8ac2ea12bf986b2dac654a87c9fe454cba85bc65",
   "fonts/LiberationMono-Regular.woff": "253f92edf15edbb682dbdf798d1dcfe0bad76092062de1cf160577a4e9ecdf27",
@@ -24,7 +24,7 @@
   "images/blog/starting-game-development/cover.png": "ae554ac2e6bd50978adc64622919b16556a829126b7d0ed5b6289a77fb0b015f",
   "images/pages/_home/Java_Edition_1.20.2.webp": "972eb94abc854e5118ed7bad2dda6c7fc43272c2af0756505369545485529814",
   "images/pages/_home/kick-streaming-platform-logo-icon.png": "8c8bbb13b6b4ee17c1a370ac41aad54284cd6527314cfdd7933fb3dbba594568",
-  "index.html": "c99c7c7a1092010fb6a8bc3a75826ad5741dda63735b844ec4eb29b746a9d4bb",
+  "index.html": "fe0ca5820f5c68b0ae663b0e66ac1630f41cd7415a935de3613f4b794a3096b3",
   "lightbox.css": "21e7f863c26f422bbe3366eb2830437edd10dc3eb23ce4feed037e716c5a32f3",
   "lightbox.js": "39eab2ed4eb4cd423c522a7d425a7cc1060260616c306975977d1a52320bfc7a",
   "paper/blotch.svg": "f17c1f992c28856667176675abc00816baa064096a8148596d366c91c601c56c",
@@ -35,9 +35,9 @@
   "paper/inkloss.svg": "0701e4f70d82dc6a22c9ad694ee9b1c78144dd466f22245241184ea78f4a35f3",
   "paper/specks.svg": "63e08ff5e8d330d46cd076b8138f7c2d55d312a954a3d0b028a691655524febf",
   "progress.css": "65886c99370adda9802535290987c083530ad59c47e8280c441f3c89beb296f0",
-  "progress/index.html": "8d29ee78a71c34627c79f74ddd80c4546931a9a12dc152fc9d9825e20e37f2af",
+  "progress/index.html": "56894f3685c0d2ef46959c26182989bb7f2696a7b6989aeb34830f83dfeb13b9",
   "search.js": "825b1fe1fba89594002e8d03a9a1e7c3e99fc98a50006e4a41ef7a2f6ddad28b",
   "search.json": "c0dc22cf6ed72dfb64cc77c05ce9c615f0c598d06a23caaa1b66caf11dd59bfd",
-  "style.css": "cffcf885f3b32f47c81a1e0d6cca2fd6fc6285b0bd006a545c8276033e30a8a0"
+  "style.css": "9951072eabd6c037db9deb9a033d85dff1b5f4b6e96e6b50aafe98bf71387b78"
  }
 }

@@ -207,6 +207,10 @@ aside ul{list-style:none;margin:0;padding:0}aside li{margin-bottom:8px;line-heig
 .index .n{font-variant-numeric:tabular-nums}
 aside a.on{color:var(--red);font-weight:700;border-bottom:2px solid var(--red);text-decoration:none}
 .catlinks a{margin-right:14px}
+/* home sidebar: quiet expand/collapse for Categories and Recent (items beyond the first five are hidden only once the script has run) */
+aside ul[data-fold=closed] li.x{display:none}
+.fold{display:block;margin:2px 0 0 auto;padding:6px 0 4px;min-height:32px;background:none;border:0;border-radius:0;box-shadow:none;color:var(--ink2);font:italic .88rem var(--serif);cursor:pointer;border-bottom:1px dotted var(--ink2);line-height:1.2}
+.fold:hover{background:none;color:var(--red);border-bottom-color:var(--red)}
 .sec{margin:1.2em 0}.links{padding-left:1.2em}
 .arch h3{margin:.8em 0 .2em}.arch ul{list-style:none;padding:0;margin:0}
 
