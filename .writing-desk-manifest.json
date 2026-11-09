@@ -5,8 +5,8 @@
   "404.html": "7de92732471dace201b763f2048cd15d3be7547ab90a6ca9d2bdfdd61b41dde3",
   "about/index.html": "a80f1c09bded11e7c558204912f1266529f15e34df85b8a3086e3ae2d4643b0f",
   "blog/godot-setup/index.html": "6d16389793e266a3ff112d926969d0c53120deec572149131a689ac88e9a3e60",
-  "blog/index.html": "5e4ffb4fda5ff864b39143b226ca70caa5a360ce22d2e563fb2c2428f7493a45",
-  "blog/set-up-before-making-game/index.html": "b34190424f45315cf30b80d565e77272259821a2334c0c9800d4a86f2b04e6d0",
+  "blog/index.html": "9ba291577983eab5d7e788010f15718c49d7ccbced0862fefe326ceefe296236",
+  "blog/set-up-before-making-game/index.html": "15c598463325d75924d0a157471371ff0b715af68ca24ee57d9717042041cd48",
   "blog/starting-game-development/index.html": "57716dc62ba45c6231b795c35652e71840a0d5f0c10669cc3fde15ac91e672a7",
   "fonts/LICENSE-Liberation.txt": "f32df582a2aab128c07b2f7e36e7b928dc5f6bd82657b905c04f91459f9e5cf9",
   "fonts/LiberationMono-Bold.woff": "6c2e8370cb99f60a953f25be8ac2ea12bf986b2dac654a87c9fe454cba85bc65",
@@ -21,7 +21,7 @@
   "images/blog/starting-game-development/cover.png": "ae554ac2e6bd50978adc64622919b16556a829126b7d0ed5b6289a77fb0b015f",
   "images/pages/_home/Java_Edition_1.20.2.webp": "972eb94abc854e5118ed7bad2dda6c7fc43272c2af0756505369545485529814",
   "images/pages/_home/kick-streaming-platform-logo-icon.png": "8c8bbb13b6b4ee17c1a370ac41aad54284cd6527314cfdd7933fb3dbba594568",
-  "index.html": "28052d93a5e56b69e87900fdd283b2d149c1cece03afa93d8d0e3568ab2bc2db",
+  "index.html": "6053ccd862a08a0c69997dc18230f060b11108117e9457ce4e0cb7d82ed466eb",
   "lightbox.css": "21e7f863c26f422bbe3366eb2830437edd10dc3eb23ce4feed037e716c5a32f3",
   "lightbox.js": "39eab2ed4eb4cd423c522a7d425a7cc1060260616c306975977d1a52320bfc7a",
   "paper/blotch.svg": "f17c1f992c28856667176675abc00816baa064096a8148596d366c91c601c56c",
@@ -34,7 +34,7 @@
   "progress.css": "65886c99370adda9802535290987c083530ad59c47e8280c441f3c89beb296f0",
   "progress/index.html": "e7d923087c6d79d57656178ab0d720f9efd11a53331d83fb1a99bd82b1186054",
   "search.js": "825b1fe1fba89594002e8d03a9a1e7c3e99fc98a50006e4a41ef7a2f6ddad28b",
-  "search.json": "e40127f759db5456644f7eb99d3eed302be5dd820c7bdacf0f1d1758deeb0d42",
+  "search.json": "35d841024ab8185b679f525a090b2011f7b40dbc61bfc4c1913b55c9922f0459",
   "style.css": "9951072eabd6c037db9deb9a033d85dff1b5f4b6e96e6b50aafe98bf71387b78"
  }
 }
