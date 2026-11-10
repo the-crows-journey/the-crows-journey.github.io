@@ -1,0 +1,48 @@
+/* ==========================================================================
+   Pinned Posts (Home and Blog). Loaded only by a page that actually shows the section, after style.css.
+   It only uses the variables, fonts and paper of style.css: no new colours, no gradients, no shadows, no motion,
+   no rounded shapes. A small quiet list: a hairline-dotted caption, then one plain row per article
+   (an optional small picture, the title, the date). It reads like a few lines added to the margin of a journal.
+   ========================================================================== */
+/* the section is a small, quiet box and the last item of the page's content grid (after main and sidebar): it spans the full width beneath them */
+.pinned{grid-column:1/-1;margin:.4em 0 0;padding:4px 12px 3px;border:1px solid var(--hair)}
+.pinned[hidden]{display:none}
+
+/* caption row: small letter-spaced title on the left, two small quiet controls on the right, one dotted hairline underneath (no heavy rules) */
+.pin-hd{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:0 14px;margin:0;border-bottom:0}
+.pinned.open .pin-hd{margin:0 0 .25em;border-bottom:1px dotted var(--ink2)} /* the dotted rule only appears once the list is open */
+.listsec.pinned .pin-hd>h2.pin-h{display:flex;align-items:center;justify-content:flex-start;gap:.55em;margin:0;padding:0 0 3px;text-align:left;
+  font:700 .68rem/1.4 var(--serif);letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);border:0}
+.pin-ic{flex:none;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round}
+/* Expand / Collapse (a button, shown only once the script has collapsed the list) and View All (a plain link): same small italic ink as the sidebar's fold control */
+.pin-ctl{display:flex;align-items:baseline;gap:14px;margin:0;font:italic .82rem/1.3 var(--serif)}
+.pin-ctl a,.pin-ctl button{display:inline-block;margin:0;padding:3px 0 2px;min-height:0;background:none;border:0;border-radius:0;box-shadow:none;color:var(--ink2);font:inherit;line-height:1.3;text-decoration:none;cursor:pointer;border-bottom:1px dotted transparent}
+.pin-ctl a:hover,.pin-ctl button:hover{background:none;color:var(--red);border-bottom-color:var(--red)}
+.pin-ctl button[hidden]{display:none}
+
+/* rows */
+.pin-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
+.pin-list[hidden]{display:none} /* collapsed: no titles, pictures or previews at all */
+.pin-item{display:flex;align-items:center;gap:10px;min-width:0;margin:0;padding:6px 0;border-top:1px dotted var(--hair)}
+.pin-item:first-child{border-top:0}
+.pin-th{flex:none;display:block;width:3.4rem}
+.pin-th .ph img{aspect-ratio:4/3;object-fit:cover}
+.pin-tx{min-width:0;line-height:1.3}
+.pin-t{display:inline;font:1rem/1.3 var(--serif);text-decoration:none;overflow-wrap:anywhere}
+.pin-t:hover{text-decoration:underline;color:var(--red)}
+.pinned .pin-item .meta,.pin-page .pin-item .meta{display:block;margin:0;font:italic .8rem/1.3 var(--serif);letter-spacing:0;text-transform:none;color:var(--ink2)}
+
+/* two quiet columns once there is room (manual order reads left to right, row by row) */
+@media(min-width:700px){
+  .pin-list{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}
+  .pin-item:nth-child(2){border-top:0}
+}
+
+/* the dedicated /pinned/ page: the same plain rows, one per line so the manual order reads straight down, a little roomier, with the excerpt under the date */
+.pin-page{margin:.4em 0 .9em}
+.pin-page .pin-list{grid-template-columns:minmax(0,1fr)}
+.pin-page .pin-item{align-items:flex-start;gap:14px;padding:10px 0}
+.pin-page .pin-item:nth-child(2){border-top:1px dotted var(--hair)}
+.pin-page .pin-th{width:5.5rem}
+.pin-page .pin-t{font-size:1.12rem;font-weight:700}
+.pin-ex{margin:.2em 0 0;font:.95rem/1.4 var(--serif);overflow-wrap:anywhere}

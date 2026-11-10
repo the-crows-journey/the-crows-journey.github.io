@@ -211,6 +211,12 @@ aside a.on{color:var(--red);font-weight:700;border-bottom:2px solid var(--red);t
 aside ul[data-fold=closed] li.x{display:none}
 .fold{display:block;margin:2px 0 0 auto;padding:6px 0 4px;min-height:32px;background:none;border:0;border-radius:0;box-shadow:none;color:var(--ink2);font:italic .88rem var(--serif);cursor:pointer;border-bottom:1px dotted var(--ink2);line-height:1.2}
 .fold:hover{background:none;color:var(--red);border-bottom-color:var(--red)}
+/* home Categories: small quiet sort control (Most Posts / A-Z), shown only once the script has run */
+.sortby{margin:0 0 6px;text-align:right;font:italic .82rem var(--serif);color:var(--ink2);line-height:1.2}
+.sortby[hidden]{display:none}
+.sortby button{min-height:32px;padding:6px 1px 4px;background:none;border:0;border-radius:0;box-shadow:none;color:var(--ink2);font:inherit;cursor:pointer;border-bottom:1px dotted var(--ink2)}
+.sortby button:hover{background:none;color:var(--red);border-bottom-color:var(--red)}
+.sortby button[aria-pressed=true]{color:var(--ink);font-style:normal;font-weight:700;border-bottom:1px solid var(--ink);cursor:default}
 .sec{margin:1.2em 0}.links{padding-left:1.2em}
 .arch h3{margin:.8em 0 .2em}.arch ul{list-style:none;padding:0;margin:0}
 
