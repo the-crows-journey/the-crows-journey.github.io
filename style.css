@@ -180,8 +180,8 @@ figcaption{margin-top:6px;font:italic .84rem/1.35 var(--serif);color:var(--ink2)
 
 /* lead story: headline across the top, picture and standfirst beneath */
 .lead{padding-bottom:16px;border-bottom:1px solid var(--ink)}
-.lead .kicker{margin:0}
-.lead h3{margin:.08em 0 .4em;font:700 clamp(1.75rem,4.6vw,2.8rem)/1.04 var(--serif);text-wrap:balance;filter:url(#ink)}
+.lead .kicker{margin:0 0 .75em}
+.lead h3{margin:.08em 0 .2em;font:700 clamp(1.75rem,4.6vw,2.8rem)/1.04 var(--serif);text-wrap:balance;filter:url(#ink)}
 .lead h3 a{text-decoration:none}
 .leadbody{display:grid;gap:12px}
 .leadpic{display:block}
